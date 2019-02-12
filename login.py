@@ -330,6 +330,30 @@ class winlevel3(QMainWindow):
         super(winlevel3, self).__init__(parent)
         loadUi('level3.ui', self)
         self.btn_exit.clicked.connect(self.exitwinlevel3)
+        self.btn_sendValue.clicked.connect(self.sendValue)
+        # Combobox where we are going to pass the value of id from this class to another
+        try:
+            dbconfig = read_db_config()
+            conn = MySQLConnection(**dbconfig)
+            # Read the products name and id
+            cursor = conn.cursor()
+            cursor.execute("SELECT * FROM product")
+            result_set = cursor.fetchall()
+        except Error as error:
+            logger.exception(error)
+
+        for products in result_set:
+            self.combo_products.addItem(products[1], int(products[0]))
+        cursor.close()
+
+    def sendValue(self):
+        logger.debug("Send the id value to the other class")
+        # Get the Product Id
+        id_product = self.combo_products.itemData(self.combo_products.currentIndex())
+        logger.debug("Product Int id: %s" % id_product)
+        self.hide()
+        self.anotherwindow = classWhithValuelevel3(id_product)
+        self.anotherwindow.show()
 
     def exitwinlevel3(self):
         self.close()
@@ -365,6 +389,54 @@ class winlevel3(QMainWindow):
 #
 # End Window Level 3
 #
+
+#
+#Class who get the value
+#
+
+class classWhithValuelevel3(QMainWindow):
+
+    def __init__(self, id_product, parent=None):
+        super(classWhithValuelevel3, self).__init__(parent)
+        loadUi('getTheValuelevel3.ui', self)
+        self.btn_exit.clicked.connect(self.exitwinlevel1)
+        self.myIdValue = id_product
+        logger.debug("Value Obtained: %s" % self.myIdValue)
+        self.valueIdfromOhterClass.setText(str(self.myIdValue))
+
+
+    def exitwinlevel1(self):
+        self.close()
+
+    def closeEvent(self, event):
+        """Generate 'question' dialog on clicking 'X' button in title bar.
+
+        Reimplement the closeEvent() event handler to include a 'Question'
+        dialog with options on how to proceed - Save, Close, Cancel buttons
+        """
+        reply = QMessageBox.question(
+            self, "Message",
+            "Are you sure about exit?",
+            QMessageBox.Close | QMessageBox.Cancel)
+
+        if reply == QMessageBox.Close:
+            logger.debug("Close App")
+            app.quit()
+        else:
+            logger.debug("Cancel Close")
+            event.ignore()
+
+
+    def keyPressEvent(self, event):
+        """Close application from escape key.
+
+        results in QMessageBox dialog from closeEvent, good but how/why?
+        """
+        if event.key() == Qt.Key_Escape:
+            logger.debug("Key Scape")
+            self.close()
+
+
 
 
 #Start App
