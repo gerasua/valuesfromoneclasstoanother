@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ui version="4.0">
- <class>Level2</class>
- <widget class="QMainWindow" name="Level2">
+ <class>getthevaluelevel2</class>
+ <widget class="QMainWindow" name="getthevaluelevel2">
   <property name="geometry">
    <rect>
     <x>0</x>
@@ -29,7 +29,7 @@
    <widget class="QLabel" name="label">
     <property name="geometry">
      <rect>
-      <x>140</x>
+      <x>100</x>
       <y>190</y>
       <width>211</width>
       <height>41</height>
@@ -89,7 +89,7 @@
      <rect>
       <x>130</x>
       <y>230</y>
-      <width>234</width>
+      <width>158</width>
       <height>26</height>
      </rect>
     </property>
@@ -97,23 +97,14 @@
      <item>
       <widget class="QLabel" name="label_3">
        <property name="text">
-        <string>Product</string>
+        <string>Product id value</string>
        </property>
       </widget>
      </item>
      <item>
-      <widget class="QComboBox" name="combo_products">
-       <property name="minimumSize">
-        <size>
-         <width>180</width>
-         <height>26</height>
-        </size>
-       </property>
-       <property name="maximumSize">
-        <size>
-         <width>180</width>
-         <height>26</height>
-        </size>
+      <widget class="QLineEdit" name="valueIdfromOhterClass">
+       <property name="readOnly">
+        <bool>true</bool>
        </property>
       </widget>
      </item>
@@ -122,7 +113,7 @@
    <widget class="QWidget" name="layoutWidget">
     <property name="geometry">
      <rect>
-      <x>170</x>
+      <x>140</x>
       <y>270</y>
       <width>140</width>
       <height>32</height>
@@ -133,13 +124,6 @@
       <widget class="QPushButton" name="btn_exit">
        <property name="text">
         <string>Exit</string>
-       </property>
-      </widget>
-     </item>
-     <item>
-      <widget class="QPushButton" name="btn_sendValue">
-       <property name="text">
-        <string>Send</string>
        </property>
       </widget>
      </item>
